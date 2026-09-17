@@ -1,154 +1,1386 @@
-<!-- SUBSTITUA SEU CÓDIGO POR ESSE -->
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Restaurante Sabor & Arte</title>
-
+<title>Novo Sabor | Restaurante</title>
+<meta name="description" content="Novo Sabor - Restaurante com pratos preparados com ingredientes selecionados. Cardápio completo, pedidos fáceis pelo WhatsApp. Rua Exemplo, 123 - Centro.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-body { margin: 0; font-family: Arial; background: #f5f5f5; }
 
-/* NAV */
-nav {
-    position: fixed;
-    width: 100%;
-    background: rgba(0,0,0,0.7);
-    padding: 15px;
-    text-align: center;
+/* ===================== VARIÁVEIS ===================== */
+:root{
+  --cor-fundo: #FBF6EF;
+  --cor-fundo-alt: #F4EBDF;
+  --cor-texto: #2A211C;
+  --cor-texto-claro: #6B5D52;
+  --cor-primaria: #C1440E;
+  --cor-primaria-escura: #9E3709;
+  --cor-destaque: #C9A227;
+  --cor-escura: #211812;
+  --cor-branco: #FFFFFF;
+  --fonte-titulo: 'Playfair Display', serif;
+  --fonte-texto: 'Poppins', sans-serif;
+  --sombra: 0 10px 30px rgba(33, 24, 18, 0.10);
+  --sombra-forte: 0 15px 40px rgba(33, 24, 18, 0.18);
+  --raio: 10px;
+  --transicao: 0.3s ease;
 }
 
-nav a { color: white; margin: 0 15px; text-decoration: none; }
+*{ margin:0; padding:0; box-sizing:border-box; }
 
-/* HERO */
-header {
-    background: url("https://images.unsplash.com/photo-1555396273-367ea4eb4db5") center/cover;
+html{ scroll-behavior:smooth; }
+
+body{
+  font-family: var(--fonte-texto);
+  color: var(--cor-texto);
+  background: var(--cor-fundo);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+img{ max-width:100%; display:block; }
+
+a{ text-decoration:none; color:inherit; }
+
+ul{ list-style:none; }
+
+section{ padding: 100px 8% 90px; }
+
+.secao-cabecalho{
+  text-align:center;
+  max-width:650px;
+  margin: 0 auto 55px;
+}
+
+.secao-cabecalho span.etiqueta{
+  display:inline-block;
+  font-family: var(--fonte-texto);
+  font-size: 0.78rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--cor-primaria);
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.secao-cabecalho h2{
+  font-family: var(--fonte-titulo);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--cor-escura);
+  margin-bottom: 14px;
+}
+
+.secao-cabecalho p{
+  color: var(--cor-texto-claro);
+  font-size: 1.02rem;
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding: 15px 32px;
+  border-radius: 50px;
+  font-family: var(--fonte-texto);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor:pointer;
+  border: none;
+  transition: var(--transicao);
+  white-space: nowrap;
+}
+
+.btn-primario{
+  background: var(--cor-primaria);
+  color: var(--cor-branco);
+  box-shadow: 0 8px 20px rgba(193, 68, 14, 0.32);
+}
+.btn-primario:hover{
+  background: var(--cor-primaria-escura);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 26px rgba(193, 68, 14, 0.4);
+}
+
+.btn-secundario{
+  background: transparent;
+  color: var(--cor-branco);
+  border: 1.5px solid rgba(255,255,255,0.7);
+}
+.btn-secundario:hover{
+  background: rgba(255,255,255,0.14);
+  border-color: var(--cor-branco);
+  transform: translateY(-3px);
+}
+
+.btn-contorno{
+  background: transparent;
+  color: var(--cor-primaria);
+  border: 1.5px solid var(--cor-primaria);
+}
+.btn-contorno:hover{
+  background: var(--cor-primaria);
+  color: var(--cor-branco);
+  transform: translateY(-3px);
+}
+
+.reveal{
+  opacity:0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visivel{
+  opacity:1;
+  transform: translateY(0);
+}
+
+/* ===================== NAVBAR ===================== */
+.navbar{
+  position: fixed;
+  top:0; left:0; width:100%;
+  z-index: 1000;
+  padding: 22px 8%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  transition: var(--transicao);
+  background: transparent;
+}
+
+.navbar.rolado{
+  background: rgba(251, 246, 239, 0.96);
+  backdrop-filter: blur(8px);
+  padding: 14px 8%;
+  box-shadow: 0 4px 18px rgba(33,24,18,0.08);
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-family: var(--fonte-titulo);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--cor-branco);
+  transition: var(--transicao);
+}
+
+.navbar.rolado .logo{ color: var(--cor-escura); }
+
+.logo-simbolo{
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--cor-primaria);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-family: var(--fonte-titulo);
+  font-weight:700;
+  font-size: 1.15rem;
+  flex-shrink:0;
+}
+
+.nav-links{
+  display:flex;
+  align-items:center;
+  gap: 38px;
+}
+
+.nav-links a{
+  color: var(--cor-branco);
+  font-weight:500;
+  font-size: 0.95rem;
+  position:relative;
+  padding: 4px 0;
+  transition: var(--transicao);
+}
+
+.navbar.rolado .nav-links a{ color: var(--cor-texto); }
+
+.nav-links a::after{
+  content:'';
+  position:absolute;
+  left:0; bottom:-4px;
+  width:0; height:2px;
+  background: var(--cor-primaria);
+  transition: var(--transicao);
+}
+.nav-links a:hover::after{ width:100%; }
+.nav-links a:hover{ color: var(--cor-primaria); }
+
+.nav-links .btn-primario{ color:#fff; }
+
+.menu-toggle{
+  display:none;
+  flex-direction:column;
+  gap:5px;
+  cursor:pointer;
+  z-index: 1100;
+  background:none;
+  border:none;
+}
+.menu-toggle span{
+  width: 26px;
+  height: 2.5px;
+  background: var(--cor-branco);
+  transition: var(--transicao);
+  border-radius: 2px;
+}
+.navbar.rolado .menu-toggle span{ background: var(--cor-escura); }
+
+/* ===================== HERO ===================== */
+.hero{
+  position: relative;
+  height: 100vh;
+  min-height: 620px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding: 0 6%;
+  overflow:hidden;
+}
+
+.hero-fundo{
+  position:absolute;
+  inset:0;
+  background: url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1740&q=80") center/cover no-repeat;
+  z-index:-2;
+}
+
+.hero-fundo::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background: linear-gradient(180deg, rgba(33,24,18,0.55) 0%, rgba(33,24,18,0.72) 60%, rgba(33,24,18,0.88) 100%);
+}
+
+.hero-conteudo{
+  max-width: 720px;
+  color: var(--cor-branco);
+}
+
+.hero-conteudo span.etiqueta{
+  display:inline-block;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight:600;
+  color: var(--cor-destaque);
+  margin-bottom: 20px;
+}
+
+.hero-conteudo h1{
+  font-family: var(--fonte-titulo);
+  font-size: 4.2rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 18px;
+}
+
+.hero-conteudo p.frase{
+  font-family: var(--fonte-titulo);
+  font-style: italic;
+  font-size: 1.4rem;
+  color: #F0DFC8;
+  margin-bottom: 18px;
+}
+
+.hero-conteudo p.descricao{
+  font-size: 1.03rem;
+  color: rgba(255,255,255,0.86);
+  max-width: 560px;
+  margin: 0 auto 38px;
+}
+
+.hero-botoes{
+  display:flex;
+  gap: 18px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+
+.hero-scroll{
+  position:absolute;
+  bottom: 34px;
+  left:50%;
+  transform: translateX(-50%);
+  color: rgba(255,255,255,0.75);
+  font-size: 0.78rem;
+  letter-spacing:2px;
+  text-transform: uppercase;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+}
+.hero-scroll::after{
+  content:'';
+  width:1px;
+  height: 34px;
+  background: rgba(255,255,255,0.5);
+  animation: descer 1.8s infinite;
+}
+@keyframes descer{
+  0%{ transform: scaleY(0); transform-origin: top; opacity: 0;}
+  50%{ transform: scaleY(1); transform-origin: top; opacity:1;}
+  100%{ transform: scaleY(0); transform-origin: bottom; opacity:0;}
+}
+
+/* ===================== SOBRE ===================== */
+.sobre{
+  background: var(--cor-fundo);
+}
+
+.sobre-grid{
+  display:grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 70px;
+  align-items:center;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.sobre-imagem{
+  position:relative;
+}
+
+.sobre-imagem img{
+  width:100%;
+  height: 460px;
+  object-fit: cover;
+  border-radius: var(--raio);
+  box-shadow: var(--sombra-forte);
+}
+
+.sobre-imagem::before{
+  content:'';
+  position:absolute;
+  top: -20px; left:-20px;
+  width: 130px;
+  height: 130px;
+  border: 6px solid var(--cor-primaria);
+  border-radius: var(--raio);
+  z-index:-1;
+}
+
+.sobre-texto span.etiqueta{
+  display:inline-block;
+  font-size: 0.78rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--cor-primaria);
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.sobre-texto h2{
+  font-family: var(--fonte-titulo);
+  font-size: 2.4rem;
+  color: var(--cor-escura);
+  margin-bottom: 20px;
+  line-height: 1.25;
+}
+
+.sobre-texto p{
+  color: var(--cor-texto-claro);
+  margin-bottom: 16px;
+  font-size: 1rem;
+}
+
+.sobre-lista{
+  margin-top: 24px;
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 24px;
+}
+
+.sobre-lista li{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size: 0.94rem;
+  color: var(--cor-texto);
+  font-weight:500;
+}
+
+.sobre-lista li::before{
+  content:'✓';
+  width: 22px;
+  height: 22px;
+  min-width:22px;
+  border-radius:50%;
+  background: rgba(193,68,14,0.12);
+  color: var(--cor-primaria);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size: 0.72rem;
+  font-weight:700;
+}
+
+/* ===================== DIFERENCIAIS ===================== */
+.diferenciais{
+  background: var(--cor-fundo-alt);
+}
+
+.diferenciais-grid{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 26px;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.diferencial-card{
+  background: var(--cor-branco);
+  padding: 36px 26px;
+  border-radius: var(--raio);
+  text-align:center;
+  box-shadow: var(--sombra);
+  transition: var(--transicao);
+  border-bottom: 3px solid transparent;
+}
+
+.diferencial-card:hover{
+  transform: translateY(-8px);
+  border-bottom-color: var(--cor-primaria);
+  box-shadow: var(--sombra-forte);
+}
+
+.diferencial-icone{
+  width: 58px;
+  height: 58px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: rgba(193,68,14,0.1);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size: 1.5rem;
+}
+
+.diferencial-card h3{
+  font-family: var(--fonte-titulo);
+  font-size: 1.12rem;
+  color: var(--cor-escura);
+  margin-bottom: 10px;
+}
+
+.diferencial-card p{
+  font-size: 0.9rem;
+  color: var(--cor-texto-claro);
+}
+
+/* ===================== CARDÁPIO ===================== */
+.cardapio{
+  background: var(--cor-fundo);
+}
+
+.filtros{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap: 12px;
+  margin-bottom: 50px;
+}
+
+.filtro-btn{
+  padding: 10px 24px;
+  border-radius: 50px;
+  border: 1.5px solid #E4D8C7;
+  background: transparent;
+  color: var(--cor-texto-claro);
+  font-family: var(--fonte-texto);
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor:pointer;
+  transition: var(--transicao);
+}
+
+.filtro-btn:hover{
+  border-color: var(--cor-primaria);
+  color: var(--cor-primaria);
+}
+
+.filtro-btn.ativo{
+  background: var(--cor-primaria);
+  border-color: var(--cor-primaria);
+  color: #fff;
+}
+
+.cardapio-grid{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.prato-card{
+  background: var(--cor-branco);
+  border-radius: var(--raio);
+  overflow:hidden;
+  box-shadow: var(--sombra);
+  transition: var(--transicao);
+  display:flex;
+  flex-direction:column;
+}
+
+.prato-card.escondido{ display:none; }
+
+.prato-card:hover{
+  transform: translateY(-6px);
+  box-shadow: var(--sombra-forte);
+}
+
+.prato-imagem{
+  position:relative;
+  height: 190px;
+  overflow:hidden;
+}
+
+.prato-imagem img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition: transform 0.5s ease;
+}
+
+.prato-card:hover .prato-imagem img{ transform: scale(1.08); }
+
+.prato-preco{
+  position:absolute;
+  top: 14px; right:14px;
+  background: var(--cor-escura);
+  color: #fff;
+  padding: 5px 14px;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight:600;
+}
+
+.prato-conteudo{
+  padding: 22px 22px 24px;
+  display:flex;
+  flex-direction:column;
+  flex:1;
+}
+
+.prato-conteudo h3{
+  font-family: var(--fonte-titulo);
+  font-size: 1.18rem;
+  color: var(--cor-escura);
+  margin-bottom: 8px;
+}
+
+.prato-conteudo p{
+  font-size: 0.88rem;
+  color: var(--cor-texto-claro);
+  margin-bottom: 18px;
+  flex:1;
+}
+
+.btn-pedir{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap: 8px;
+  background: rgba(193,68,14,0.08);
+  color: var(--cor-primaria);
+  border: none;
+  padding: 11px;
+  border-radius: 50px;
+  font-family: var(--fonte-texto);
+  font-weight: 600;
+  font-size: 0.86rem;
+  cursor:pointer;
+  transition: var(--transicao);
+}
+
+.btn-pedir:hover{
+  background: var(--cor-primaria);
+  color: #fff;
+}
+
+/* ===================== CTA PEDIDO ===================== */
+.cta-pedido{
+  background: linear-gradient(135deg, var(--cor-escura) 0%, #3A2A1F 100%);
+  color: #fff;
+  text-align:center;
+  padding: 90px 8%;
+  position:relative;
+  overflow:hidden;
+}
+
+.cta-pedido::before{
+  content:'';
+  position:absolute;
+  width: 320px; height:320px;
+  border-radius:50%;
+  background: rgba(193,68,14,0.18);
+  top: -140px; right: -80px;
+}
+
+.cta-pedido h2{
+  font-family: var(--fonte-titulo);
+  font-size: 2.3rem;
+  margin-bottom: 14px;
+  position:relative;
+}
+
+.cta-pedido p{
+  color: rgba(255,255,255,0.78);
+  max-width: 480px;
+  margin: 0 auto 32px;
+  position:relative;
+}
+
+/* ===================== INFORMAÇÕES ===================== */
+.informacoes{
+  background: var(--cor-fundo-alt);
+}
+
+.info-grid{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.info-card{
+  background: var(--cor-branco);
+  padding: 34px 28px;
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+  display:flex;
+  gap: 18px;
+  align-items:flex-start;
+}
+
+.info-icone{
+  width: 48px;
+  height:48px;
+  min-width: 48px;
+  border-radius:50%;
+  background: rgba(193,68,14,0.1);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size: 1.25rem;
+}
+
+.info-card h3{
+  font-family: var(--fonte-titulo);
+  font-size: 1.05rem;
+  color: var(--cor-escura);
+  margin-bottom: 6px;
+}
+
+.info-card p{
+  font-size: 0.9rem;
+  color: var(--cor-texto-claro);
+  line-height:1.55;
+}
+
+/* ===================== CONTATO ===================== */
+.contato{
+  background: var(--cor-fundo);
+}
+
+.contato-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  max-width: 1180px;
+  margin: 0 auto;
+  align-items:stretch;
+}
+
+.contato-card{
+  background: var(--cor-branco);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+  padding: 44px 40px;
+}
+
+.contato-card h3{
+  font-family: var(--fonte-titulo);
+  font-size: 1.5rem;
+  color: var(--cor-escura);
+  margin-bottom: 26px;
+}
+
+.contato-linha{
+  display:flex;
+  align-items:center;
+  gap: 16px;
+  margin-bottom: 20px;
+  font-size: 0.95rem;
+  color: var(--cor-texto);
+}
+
+.contato-linha span.ic{
+  width: 40px; height:40px; min-width:40px;
+  border-radius:50%;
+  background: rgba(193,68,14,0.1);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size: 1.05rem;
+}
+
+.contato-card .btn-primario{
+  margin-top: 12px;
+  width:100%;
+}
+
+.mapa-placeholder{
+  border-radius: var(--raio);
+  overflow:hidden;
+  min-height: 100%;
+  background:
+    linear-gradient(135deg, rgba(193,68,14,0.12), rgba(201,162,39,0.14)),
+    repeating-linear-gradient(45deg, #E9DDC9 0px, #E9DDC9 2px, #F4EBDF 2px, #F4EBDF 22px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  gap: 10px;
+  color: var(--cor-texto-claro);
+  text-align:center;
+  padding: 30px;
+  min-height: 300px;
+}
+
+.mapa-pin{
+  width: 54px; height:54px;
+  border-radius: 50% 50% 50% 0;
+  background: var(--cor-primaria);
+  transform: rotate(-45deg);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow: 0 10px 20px rgba(193,68,14,0.35);
+}
+.mapa-pin span{ transform: rotate(45deg); color:#fff; font-size:1.3rem; }
+
+/* ===================== FOOTER ===================== */
+footer{
+  background: var(--cor-escura);
+  color: rgba(255,255,255,0.85);
+  padding: 70px 8% 26px;
+}
+
+.footer-grid{
+  display:grid;
+  grid-template-columns: 1.3fr 1fr 1fr 1fr;
+  gap: 40px;
+  max-width: 1180px;
+  margin: 0 auto 50px;
+}
+
+.footer-logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-family: var(--fonte-titulo);
+  font-size: 1.4rem;
+  color: #fff;
+  margin-bottom: 16px;
+}
+
+.footer-col p{ font-size: 0.88rem; line-height:1.7; color: rgba(255,255,255,0.62); }
+
+.footer-col h4{
+  font-family: var(--fonte-texto);
+  font-size: 0.95rem;
+  color: #fff;
+  margin-bottom: 20px;
+  letter-spacing: 0.5px;
+}
+
+.footer-col ul li{ margin-bottom: 12px; }
+.footer-col ul li a{
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.62);
+  transition: var(--transicao);
+}
+.footer-col ul li a:hover{ color: var(--cor-primaria); padding-left: 4px; }
+
+.footer-bottom{
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 24px;
+  text-align:center;
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.5);
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+/* ===================== WHATSAPP FLUTUANTE ===================== */
+.whatsapp-flutuante{
+  position: fixed;
+  bottom: 26px;
+  right: 26px;
+  width: 60px;
+  height: 60px;
+  background: #25D366;
+  border-radius: 50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow: 0 10px 24px rgba(37,211,102,0.45);
+  z-index: 999;
+  transition: var(--transicao);
+}
+.whatsapp-flutuante:hover{
+  transform: scale(1.1);
+  box-shadow: 0 14px 30px rgba(37,211,102,0.55);
+}
+.whatsapp-flutuante svg{ width:30px; height:30px; }
+
+/* ===================== RESPONSIVIDADE ===================== */
+@media (max-width: 1024px){
+  .sobre-grid{ grid-template-columns: 1fr; gap: 44px; }
+  .sobre-imagem img{ height: 360px; }
+  .diferenciais-grid{ grid-template-columns: repeat(2, 1fr); }
+  .cardapio-grid{ grid-template-columns: repeat(2, 1fr); }
+  .info-grid{ grid-template-columns: 1fr; }
+  .contato-grid{ grid-template-columns: 1fr; }
+  .footer-grid{ grid-template-columns: 1fr 1fr; }
+  .hero-conteudo h1{ font-size: 3.2rem; }
+}
+
+@media (max-width: 768px){
+  section{ padding: 70px 6% 60px; }
+
+  .menu-toggle{ display:flex; }
+
+  .nav-links{
+    position: fixed;
+    top:0; right: -100%;
+    width: 78%;
+    max-width: 320px;
     height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background: var(--cor-branco);
+    flex-direction:column;
+    align-items:flex-start;
+    justify-content:center;
+    gap: 30px;
+    padding: 40px;
+    transition: right 0.4s ease;
+    box-shadow: -10px 0 30px rgba(0,0,0,0.15);
+  }
+  .nav-links.aberto{ right:0; }
+  .nav-links a{ color: var(--cor-texto) !important; font-size: 1.05rem; }
+  .nav-links .btn-primario{ width:100%; text-align:center; }
+
+  .hero-conteudo h1{ font-size: 2.5rem; }
+  .hero-conteudo p.frase{ font-size: 1.15rem; }
+  .hero-botoes{ flex-direction:column; width:100%; }
+  .hero-botoes .btn{ width:100%; }
+
+  .sobre-imagem::before{ display:none; }
+  .sobre-lista{ grid-template-columns: 1fr; }
+
+  .diferenciais-grid{ grid-template-columns: 1fr 1fr; gap:18px; }
+  .diferencial-card{ padding: 26px 18px; }
+
+  .cardapio-grid{ grid-template-columns: 1fr; }
+
+  .footer-grid{ grid-template-columns: 1fr 1fr; gap: 30px; }
+
+  .contato-card{ padding: 32px 26px; }
 }
 
-header h1 {
-    color: white;
-    background: rgba(0,0,0,0.5);
-    padding: 20px;
-}
-
-/* MENU */
-.menu {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-}
-
-.card {
-    background: white;
-    width: 250px;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-.card img {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-}
-
-.card h3, .card p {
-    padding: 10px;
-}
-
-/* WHATSAPP */
-.whatsapp {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-}
-
-.whatsapp img {
-    width: 60px;
+@media (max-width: 480px){
+  .diferenciais-grid{ grid-template-columns: 1fr; }
+  .footer-grid{ grid-template-columns: 1fr; gap: 34px; }
+  .hero-conteudo h1{ font-size: 2.1rem; }
+  .secao-cabecalho h2{ font-size: 1.9rem; }
+  .whatsapp-flutuante{ width: 54px; height:54px; bottom:18px; right:18px; }
 }
 </style>
 </head>
 
 <body>
 
-<nav>
-    <a href="#">Início</a>
-    <a href="#menu">Cardápio</a>
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <a href="#inicio" class="logo">
+    <span class="logo-simbolo">N</span>
+    Novo Sabor
+  </a>
+
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#inicio">Início</a></li>
+    <li><a href="#sobre">Sobre nós</a></li>
+    <li><a href="#cardapio">Cardápio</a></li>
+    <li><a href="#diferenciais">Diferenciais</a></li>
+    <li><a href="#contato">Contato</a></li>
+    <li><a href="#" class="btn btn-primario" onclick="pedirPeloWhatsapp(); return false;">Pedir agora</a></li>
+  </ul>
+
+  <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
-<header>
-    <h1>Restaurante Sabor & Arte</h1>
+<!-- HERO -->
+<header class="hero" id="inicio">
+  <div class="hero-fundo"></div>
+  <div class="hero-conteudo">
+    <span class="etiqueta">Restaurante</span>
+    <h1>Novo Sabor</h1>
+    <p class="frase">Sabores que transformam momentos.</p>
+    <p class="descricao">Pratos preparados com ingredientes selecionados e muito cuidado, em um ambiente acolhedor pensado para tornar cada refeição uma boa experiência.</p>
+    <div class="hero-botoes">
+      <a href="#cardapio" class="btn btn-primario">Ver cardápio</a>
+      <a href="#" class="btn btn-secundario" onclick="pedirPeloWhatsapp(); return false;">Pedir agora pelo WhatsApp</a>
+    </div>
+  </div>
+  <div class="hero-scroll">Role para baixo</div>
 </header>
 
-<section id="menu">
-    <h2 style="text-align:center;">Nosso Cardápio</h2>
+<main>
 
-    <div class="menu">
-
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe">
-            <h3>Prato Executivo</h3>
-            <p>R$25</p>
-        </div>
-
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1550547660-d9450f859349">
-            <h3>Hambúrguer</h3>
-            <p>R$18</p>
-        </div>
-
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38">
-            <h3>Pizza</h3>
-            <p>R$35</p>
-        </div>
-
+<!-- SOBRE -->
+<section class="sobre" id="sobre">
+  <div class="sobre-grid">
+    <div class="sobre-imagem reveal">
+      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=80" alt="Ambiente interno do restaurante Novo Sabor" loading="lazy">
     </div>
+    <div class="sobre-texto reveal">
+      <span class="etiqueta">Sobre nós</span>
+      <h2>A essência do Novo Sabor está em cada prato</h2>
+      <p>No Novo Sabor, cada prato começa pela escolha cuidadosa dos ingredientes. Trabalhamos com fornecedores de confiança e priorizamos produtos frescos, porque sabemos que uma boa refeição começa muito antes de chegar à mesa.</p>
+      <p>Nossa cozinha une técnica e cuidado no preparo, buscando equilíbrio entre sabor, apresentação e consistência em cada pedido. Seja em uma refeição rápida ou em um momento mais especial, o objetivo é sempre o mesmo: entregar uma experiência gastronômica completa, do primeiro ao último detalhe.</p>
+      <ul class="sobre-lista">
+        <li>Ingredientes selecionados</li>
+        <li>Preparo cuidadoso</li>
+        <li>Ampla variedade de opções</li>
+        <li>Atendimento atencioso</li>
+      </ul>
+    </div>
+  </div>
 </section>
 
-<a class="whatsapp" href="https://wa.me/5500000000000">
-    <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png">
-</a>
-<footer style="background:#111; color:white; padding:40px 20px; margin-top:50px;">
-    
-    <div style="max-width:1000px; margin:auto; display:flex; flex-wrap:wrap; justify-content:space-between; gap:30px;">
-        
-        <!-- SOBRE -->
-        <div style="flex:1; min-width:250px;">
-            <h3>Sobre Nós</h3>
-            <p>
-                O Restaurante Sabor & Arte oferece pratos preparados com ingredientes frescos 
-                e selecionados. Nosso compromisso é proporcionar uma experiência gastronômica única.
-            </p>
-        </div>
+<!-- DIFERENCIAIS -->
+<section class="diferenciais" id="diferenciais">
+  <div class="secao-cabecalho reveal">
+    <span class="etiqueta">Diferenciais</span>
+    <h2>Por que escolher o Novo Sabor?</h2>
+    <p>Alguns motivos que fazem a diferença na hora de escolher onde comer.</p>
+  </div>
 
-        <!-- CONTATO -->
-        <div style="flex:1; min-width:250px;">
-            <h3>Contato</h3>
-            <p>📍 Rua Exemplo, 123 - Centro</p>
-            <p>📞 (11) 99999-9999</p>
-            <p>🕒 Seg a Dom: 11h às 23h</p>
-        </div>
+  <div class="diferenciais-grid">
+    <div class="diferencial-card reveal">
+      <div class="diferencial-icone">🌿</div>
+      <h3>Ingredientes selecionados</h3>
+      <p>Produtos frescos escolhidos com cuidado para garantir qualidade em cada prato.</p>
+    </div>
+    <div class="diferencial-card reveal">
+      <div class="diferencial-icone">👨‍🍳</div>
+      <h3>Preparo cuidadoso</h3>
+      <p>Receitas preparadas com atenção aos detalhes, do tempero ao ponto certo.</p>
+    </div>
+    <div class="diferencial-card reveal">
+      <div class="diferencial-icone">🤝</div>
+      <h3>Atendimento de qualidade</h3>
+      <p>Uma equipe pronta para tornar sua experiência mais agradável do início ao fim.</p>
+    </div>
+    <div class="diferencial-card reveal">
+      <div class="diferencial-icone">📱</div>
+      <h3>Pedido fácil pelo WhatsApp</h3>
+      <p>Faça seu pedido em poucos cliques, direto pelo WhatsApp, sem complicação.</p>
+    </div>
+  </div>
+</section>
 
-        <!-- REDES -->
-        <div style="flex:1; min-width:250px;">
-            <h3>Redes Sociais</h3>
-            <p>📸 Instagram: @saborarte</p>
-            <p>📘 Facebook: Restaurante Sabor & Arte</p>
-        </div>
+<!-- CARDÁPIO -->
+<section class="cardapio" id="cardapio">
+  <div class="secao-cabecalho reveal">
+    <span class="etiqueta">Cardápio</span>
+    <h2>Nosso Cardápio</h2>
+    <p>Uma seleção pensada para agradar diferentes gostos. Os itens abaixo são exemplos para demonstração.</p>
+  </div>
 
+  <div class="filtros">
+    <button class="filtro-btn ativo" data-filtro="todos">Todos</button>
+    <button class="filtro-btn" data-filtro="principais">Pratos principais</button>
+    <button class="filtro-btn" data-filtro="hamburgueres">Hambúrgueres</button>
+    <button class="filtro-btn" data-filtro="pizzas">Pizzas</button>
+    <button class="filtro-btn" data-filtro="bebidas">Bebidas</button>
+  </div>
+
+  <div class="cardapio-grid" id="cardapioGrid">
+
+    <!-- Pratos principais -->
+    <article class="prato-card" data-categoria="principais">
+      <div class="prato-imagem">
+        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80" alt="Prato Executivo" loading="lazy">
+        <span class="prato-preco">R$ 32,00</span>
+      </div>
+      <div class="prato-conteudo">
+        <h3>Prato Executivo</h3>
+        <p>Arroz, feijão, proteína do dia e acompanhamentos selecionados.</p>
+        <button class="btn-pedir" onclick="pedirPeloWhatsapp('Prato Executivo')">Pedir pelo WhatsApp</button>
+      </div>
+    </article>
+
+    <article class="prato-card" data-categoria="principais">
+      <div class="prato-imagem">
+        <img src="https://images.unsplash.com/photo-1432139555190-58524dae6a55?auto=format&fit=crop&w=600&q=80" alt="Filé com acompanhamentos" loading="lazy">
+        <span class="prato-preco">R$ 48,00</span>
+      </div>
+      <div class="prato-conteudo">
+        <h3>Filé com acompanhamentos</h3>
+        <p>Filé grelhado ao ponto, servido com legumes salteados e purê.</p>
+        <button class="btn-pedir" onclick="pedirPeloWhatsapp('Filé com acompanhamentos')">Pedir pelo WhatsApp</button>
+      </div>
+    </article>
+
+    <article class="prato-card" data-categoria="principais">
+      <div class="prato-imagem">
+        <img src="https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&w=600&q=80" alt="Frango grelhado" loading="lazy">
+        <span class="prato-preco">R$ 36,00</span>
+      </div>
+      <div class="prato-conteudo">
+        <h3>Frango grelhado</h3>
+        <p>Peito de frango grelhado, temperado na medida certa, com salada fresca.</p>
+        <button class="btn-pedir" onclick="pedirPeloWhatsapp('Frango grelhado')">Pedir pelo WhatsApp</button>
+      </div>
+    </article>
+
+    <!-- Hambúrgueres -->
+    <article class="prato-card" data-categoria="hamburgueres">
+      <div class="prato-imagem">
+        <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=600&q=80" alt="Hambúrguer Clássico" loading="lazy">
+        <span class="prato-preco">R$ 24,00</span>
+      </div>
+      <div class="prato-conteudo">
+        <h3>Hambúrguer Clássico</h3>
+        <p>Pão brioche, carne artesanal, queijo, alface e tomate.</p>
+        <button class="btn-pedir" onclick="pedirPeloWhatsapp('Hambúrguer Clássico')">Pedir pelo WhatsApp</button>
+      </div>
+    </article>
+
+    <article class="prato-card" data-categoria="hamburgueres">
+      <div class="prato-imagem">
+        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80" alt="X-Bacon" loading="lazy">
+        <span class="prato-preco">R$ 28,00</span>
+      </div>
+      <div class="prato-conteudo">
+        <h3>X-Bacon</h3>
+        <p>Carne artesanal, queijo, bacon crocante e molho especial da casa.</p>
+        <button class="btn-pedir" onclick="pedirPeloWhatsapp('X-Bacon')">Pedir pelo WhatsApp</button>
+      </div>
+    </article>
+
+    <article class="prato-card" data-categoria="hamburgueres">
+      <div class="prato-imagem">
+        <img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?auto=format&fit=crop&w=600&q=80" alt="X-Salada" loading="lazy">
+        <span class="prato-preco">R$ 26,00</span>
+      </div>
+      <div class="prato-conteudo">
+        <h3>X-Salada</h3>
+        <p>Carne artesanal, queijo, alface, tomate e maionese da casa.</p>
+        <button class="btn-pedir" onclick="pedirPeloWhatsapp('X-Salada')">Pedir pelo WhatsApp</button>
+      </div>
+    </article>
+
+    <!-- Pizzas -->
+    <article class="prato-card" data-categoria="pizzas">
+      <div class="prato-imagem">
+        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=600&q=80" alt="Pizza Margherita" loading="lazy">
+        <span class="prato-preco">R$ 42,00</span>
+      </div>
+      <div class="prato-conteudo">
+        <h3>Pizza Margherita</h3>
+        <p>Molho de tomate, muçarela de qualidade, manjericão fresco e azeite.</p>
+        <button class="btn-pedir" onclick="pedirPeloWhatsapp('Pizza Margherita')">Pedir pelo WhatsApp</button>
+      </div>
+    </article>
+
+    <article class="prato-card" data-categoria="pizzas">
+      <div class="prato-imagem">
+        <img src="https://images.unsplash.com/photo-1548365328-9f547fb0953b?auto=format&fit=crop&w=600&q=80" alt="Pizza Calabresa" loading="lazy">
+        <span class="prato-preco">R$ 45,00</span>
+      </div>
+      <div class="prato-conteudo">
+        <h3>Pizza Calabresa</h3>
+        <p>Calabresa fatiada, cebola, azeitonas e muçarela derretida.</p>
+        <button class="btn-pedir" onclick="pedirPeloWhatsapp('Pizza Calabresa')">Pedir pelo WhatsApp</button>
+      </div>
+    </article>
+
+    <article class="prato-card" data-categoria="pizzas">
+      <div class="prato-imagem">
+        <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80" alt="Pizza Frango com Catupiry" loading="lazy">
+        <span class="prato-preco">R$ 47,00</span>
+      </div>
+      <div class="prato-conteudo">
+        <h3>Frango com Catupiry</h3>
+        <p>Frango desfiado temperado, catupiry cremoso e muçarela.</p>
+        <button class="btn-pedir" onclick="pedirPeloWhatsapp('Pizza Frango com Catupiry')">Pedir pelo WhatsApp</button>
+      </div>
+    </article>
+
+    <!-- Bebidas -->
+    <article class="prato-card" data-categoria="bebidas">
+      <div class="prato-imagem">
+        <img src="https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=600&q=80" alt="Refrigerante" loading="lazy">
+        <span class="prato-preco">R$ 7,00</span>
+      </div>
+      <div class="prato-conteudo">
+        <h3>Refrigerante</h3>
+        <p>Lata gelada, sabores variados disponíveis.</p>
+        <button class="btn-pedir" onclick="pedirPeloWhatsapp('Refrigerante')">Pedir pelo WhatsApp</button>
+      </div>
+    </article>
+
+    <article class="prato-card" data-categoria="bebidas">
+      <div class="prato-imagem">
+        <img src="https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=600&q=80" alt="Suco natural" loading="lazy">
+        <span class="prato-preco">R$ 9,00</span>
+      </div>
+      <div class="prato-conteudo">
+        <h3>Suco natural</h3>
+        <p>Feito na hora, com frutas frescas selecionadas.</p>
+        <button class="btn-pedir" onclick="pedirPeloWhatsapp('Suco natural')">Pedir pelo WhatsApp</button>
+      </div>
+    </article>
+
+    <article class="prato-card" data-categoria="bebidas">
+      <div class="prato-imagem">
+        <img src="https://images.unsplash.com/photo-1560023907-5f339617ea30?auto=format&fit=crop&w=600&q=80" alt="Água" loading="lazy">
+        <span class="prato-preco">R$ 5,00</span>
+      </div>
+      <div class="prato-conteudo">
+        <h3>Água</h3>
+        <p>Água mineral, com ou sem gás.</p>
+        <button class="btn-pedir" onclick="pedirPeloWhatsapp('Água')">Pedir pelo WhatsApp</button>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-pedido">
+  <h2>Gostou do que viu?</h2>
+  <p>Faça seu pedido de forma rápida e prática pelo WhatsApp.</p>
+  <a href="#" class="btn btn-primario" onclick="pedirPeloWhatsapp(); return false;">Fazer meu pedido</a>
+</section>
+
+<!-- INFORMAÇÕES -->
+<section class="informacoes">
+  <div class="secao-cabecalho reveal">
+    <span class="etiqueta">Informações</span>
+    <h2>Horário e informações</h2>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-card reveal">
+      <div class="info-icone">🕒</div>
+      <div>
+        <h3>Horário de funcionamento</h3>
+        <p>Segunda a Domingo<br>11:00 às 23:00</p>
+      </div>
+    </div>
+    <div class="info-card reveal">
+      <div class="info-icone">📍</div>
+      <div>
+        <h3>Endereço</h3>
+        <p>Rua Exemplo, 123 - Centro</p>
+      </div>
+    </div>
+    <div class="info-card reveal">
+      <div class="info-icone">📞</div>
+      <div>
+        <h3>Telefone</h3>
+        <p>(11) 99999-9999</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section class="contato" id="contato">
+  <div class="secao-cabecalho reveal">
+    <span class="etiqueta">Contato</span>
+    <h2>Fale com o Novo Sabor</h2>
+    <p>Estamos à disposição para dúvidas, sugestões e pedidos.</p>
+  </div>
+
+  <div class="contato-grid">
+    <div class="contato-card reveal">
+      <h3>Informações de contato</h3>
+
+      <div class="contato-linha">
+        <span class="ic">📍</span>
+        <span>Rua Exemplo, 123 - Centro</span>
+      </div>
+      <div class="contato-linha">
+        <span class="ic">📞</span>
+        <span>(11) 99999-9999</span>
+      </div>
+      <div class="contato-linha">
+        <span class="ic">🕒</span>
+        <span>Segunda a Domingo — 11:00 às 23:00</span>
+      </div>
+      <div class="contato-linha">
+        <span class="ic">📸</span>
+        <span>Instagram: @saborarte</span>
+      </div>
+      <div class="contato-linha">
+        <span class="ic">📘</span>
+        <span>Facebook: Restaurante Sabor & Arte</span>
+      </div>
+
+      <a href="#" class="btn btn-primario" onclick="pedirPeloWhatsapp(); return false;">Falar no WhatsApp</a>
     </div>
 
-    <p style="text-align:center; margin-top:30px;">
-        © 2026 Restaurante Sabor & Arte
-    </p>
+    <div class="mapa-placeholder reveal">
+      <div class="mapa-pin"><span>📍</span></div>
+      <strong style="color: var(--cor-escura);">Rua Exemplo, 123 - Centro</strong>
+      <span style="font-size:0.85rem;">Mapa ilustrativo para demonstração</span>
+    </div>
+  </div>
+</section>
 
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <div class="footer-logo">
+        <span class="logo-simbolo">N</span>
+        Novo Sabor
+      </div>
+      <p>Pratos preparados com ingredientes selecionados e muito cuidado, para tornar cada refeição uma boa experiência.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Links rápidos</h4>
+      <ul>
+        <li><a href="#inicio">Início</a></li>
+        <li><a href="#sobre">Sobre nós</a></li>
+        <li><a href="#cardapio">Cardápio</a></li>
+        <li><a href="#diferenciais">Diferenciais</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contato</h4>
+      <ul>
+        <li><a href="#">📍 Rua Exemplo, 123 - Centro</a></li>
+        <li><a href="#">📞 (11) 99999-9999</a></li>
+        <li><a href="#" onclick="pedirPeloWhatsapp(); return false;">💬 WhatsApp</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Horário e redes</h4>
+      <ul>
+        <li><a href="#">🕒 Seg a Dom: 11h às 23h</a></li>
+        <li><a href="#">📸 @saborarte</a></li>
+        <li><a href="#">📘 Restaurante Sabor & Arte</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    © 2026 Novo Sabor. Todos os direitos reservados.
+  </div>
 </footer>
+
+<!-- WHATSAPP FLUTUANTE -->
+<a class="whatsapp-flutuante" href="https://wa.me/5500000000000?text=Boa%20noite%2C%20estou%20fazendo%20um%20pedido%20pelo%20site%20e%20gostaria%20de%20fazer%20um%20pedido." target="_blank" aria-label="Falar no WhatsApp">
+  <svg viewBox="0 0 32 32" fill="white" xmlns="http://www.w3.org/2000/svg">
+    <path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.386.7 4.607 1.908 6.474L4 29l7.727-1.874A11.94 11.94 0 0 0 16 27c6.627 0 12-5.373 12-12S22.628 3 16.001 3Zm0 21.818a9.77 9.77 0 0 1-4.98-1.363l-.357-.212-4.586 1.112 1.135-4.47-.234-.366A9.78 9.78 0 0 1 6.182 15c0-5.415 4.404-9.818 9.819-9.818S25.82 9.585 25.82 15 21.416 24.818 16.001 24.818Zm5.373-7.347c-.294-.147-1.74-.858-2.01-.955-.27-.098-.466-.147-.663.147-.196.294-.76.955-.932 1.152-.171.196-.343.22-.637.073-.294-.147-1.242-.458-2.366-1.463-.875-.78-1.466-1.744-1.638-2.038-.171-.294-.018-.453.129-.6.132-.132.294-.343.441-.514.147-.171.196-.294.294-.49.098-.196.049-.368-.024-.515-.073-.147-.663-1.6-.909-2.192-.24-.576-.484-.498-.663-.507l-.564-.01c-.196 0-.515.073-.784.368-.27.294-1.03 1.007-1.03 2.457 0 1.45 1.055 2.85 1.203 3.046.147.196 2.077 3.172 5.033 4.448.703.303 1.252.484 1.68.62.706.224 1.348.192 1.856.117.566-.085 1.74-.71 1.985-1.395.245-.686.245-1.273.171-1.395-.073-.123-.269-.196-.563-.343Z"/>
+  </svg>
+</a>
+
+<!-- JAVASCRIPT -->
+<script>
+  // Número de WhatsApp do restaurante (mantido conforme código original)
+  const numeroWhatsapp = "5500000000000";
+
+  // Gera e abre o link do WhatsApp, com mensagem personalizada conforme o produto
+  function pedirPeloWhatsapp(produto) {
+    let mensagem;
+    if (produto) {
+      mensagem = `Boa noite, estou fazendo um pedido pelo site e gostaria de um pedido ${produto}.`;
+    } else {
+      mensagem = "Boa noite, estou fazendo um pedido pelo site e gostaria de fazer um pedido.";
+    }
+    const url = `https://wa.me/${numeroWhatsapp}?text=${encodeURIComponent(mensagem)}`;
+    window.open(url, "_blank");
+  }
+
+  // Navbar sólida ao rolar a página
+  const navbar = document.getElementById("navbar");
+  window.addEventListener("scroll", () => {
+    navbar.classList.toggle("rolado", window.scrollY > 60);
+  });
+
+  // Menu mobile
+  const menuToggle = document.getElementById("menuToggle");
+  const navLinks = document.getElementById("navLinks");
+
+  menuToggle.addEventListener("click", () => {
+    navLinks.classList.toggle("aberto");
+  });
+
+  navLinks.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => navLinks.classList.remove("aberto"));
+  });
+
+  // Filtro do cardápio
+  const botoesFiltro = document.querySelectorAll(".filtro-btn");
+  const cardsPratos = document.querySelectorAll(".prato-card");
+
+  botoesFiltro.forEach(botao => {
+    botao.addEventListener("click", () => {
+      botoesFiltro.forEach(b => b.classList.remove("ativo"));
+      botao.classList.add("ativo");
+
+      const filtro = botao.dataset.filtro;
+
+      cardsPratos.forEach(card => {
+        if (filtro === "todos" || card.dataset.categoria === filtro) {
+          card.classList.remove("escondido");
+        } else {
+          card.classList.add("escondido");
+        }
+      });
+    });
+  });
+
+  // Animação de entrada suave nos elementos ao rolar a página
+  const elementosReveal = document.querySelectorAll(".reveal");
+  const observador = new IntersectionObserver((entradas) => {
+    entradas.forEach(entrada => {
+      if (entrada.isIntersecting) {
+        entrada.target.classList.add("visivel");
+        observador.unobserve(entrada.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  elementosReveal.forEach(el => observador.observe(el));
+</script>
+
 </body>
 </html>
